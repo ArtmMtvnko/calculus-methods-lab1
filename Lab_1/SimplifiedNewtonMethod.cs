@@ -59,11 +59,14 @@
 
             double xk = x0 - Func(x0) / dF_x0;
             double xkPlus1 = xk - Func(xk) / dF_x0;
-            
-            while (Math.Abs(Func(xkPlus1)) > epsilon)
+            Console.WriteLine("{0}\n{1}\n{2}", x0, xk, xkPlus1);
+
+            // Math.Abs(Func(xkPlus1))
+            while (Math.Abs(xkPlus1 - xk) > epsilon)
             {
                 xk = xkPlus1;
                 xkPlus1 = xk - Func(xk) / dF_x0;
+                Console.WriteLine(xkPlus1);
             }
 
             return xkPlus1;
