@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Numerics;
 using CalculusMethodsLab1.Lab_1;
 using Singulink.Numerics;
-using Singulink.Numerics;
 
 Console.WriteLine("Hello, World!");
 
@@ -34,35 +33,23 @@ Console.WriteLine("Hello, World!");
 //Console.WriteLine("1) {0}", simpleIterationsMethod.FindFoot1(2, 3, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot2(5.5, 6.5, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot3(7.5, 9, 0.0000001));
-
+Console.WriteLine(ulong.MaxValue);
 Console.WriteLine(BigInteger.Parse("849918209384891082521") - BigInteger.Parse("849918209384891082521"));
-Console.WriteLine(BigDecimal.Parse("23495092830485093,283485020834"));
+Console.WriteLine(BigDecimal.Parse("-234950928304850938420938082098090,2342834283485020834"));
 
-LinearEquation linearEquation = new LinearEquation(new List<long>()
+
+LinearEquation linearEquation = new LinearEquation(new List<BigInteger>()
 {
     150, 249, -661, -905, 885, 917, -290, -256
 });
 //{ -256, -290, 917, 885, -905, -661, 249, -150 }
 linearEquation.PrintPolinom();
 
-linearEquation.Quadrature();
-linearEquation.PrintIntermediatePolinom();
+for (int i = 0; i < 6; i++)
+{
+    linearEquation.Quadrature();
+    linearEquation.PrintIntermediatePolinom();
 
-linearEquation.FindRoots();
-linearEquation.PrintRoots();
-
-
-
-linearEquation.Quadrature();
-linearEquation.PrintIntermediatePolinom();
-
-linearEquation.FindRoots();
-linearEquation.PrintRoots();
-
-
-
-linearEquation.Quadrature();
-linearEquation.PrintIntermediatePolinom();
-
-linearEquation.FindRoots();
-linearEquation.PrintRoots();
+    linearEquation.FindRoots();
+    linearEquation.PrintRoots();
+}

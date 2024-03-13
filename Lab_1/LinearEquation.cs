@@ -1,23 +1,26 @@
-﻿namespace CalculusMethodsLab1.Lab_1
+﻿using System.Numerics;
+using Singulink.Numerics;
+
+namespace CalculusMethodsLab1.Lab_1
 {
     class LinearEquation
     {
-        List<long> _coefficients;
-        List<long> _intermediateCoefficients = new List<long>();
-        List<long> _modifiedCoefficients = new List<long>();
+        List<BigInteger> _coefficients;
+        List<BigInteger> _intermediateCoefficients = new List<BigInteger>();
+        List<BigInteger> _modifiedCoefficients = new List<BigInteger>();
 
         double[] _roots;
 
         int quadratureCounter = 0;
 
-        public LinearEquation(List<long> coefficients)
+        public LinearEquation(List<BigInteger> coefficients)
         {
             _coefficients = coefficients;
             _coefficients.Reverse();
 
             _roots = new double[_coefficients.Count];
 
-            long[] nums = new long[_coefficients.Count];
+            BigInteger[] nums = new BigInteger[_coefficients.Count];
             _coefficients.CopyTo(nums);
             _intermediateCoefficients = nums.ToList();
             _modifiedCoefficients = nums.ToList();
@@ -60,9 +63,9 @@
 
         public void Quadrature()
         {
-            long b_k = 0;
-            long a_k = 0;
-            long sum = 0;
+            BigInteger b_k = 0;
+            BigInteger a_k = 0;
+            BigInteger sum = 0;
             PullIntermediateCoefficients();
 
             for (int k = 0; k < _coefficients.Count; k++)
@@ -92,9 +95,11 @@
 
             for (int k = 1; k < _modifiedCoefficients.Count; k++)
             {
-                double expression = 
-                    (double)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] /
-                    (double)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1];
+                double expression =
+                    (double)(
+                    (BigDecimal)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] /
+                    (BigDecimal)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1]
+                    );
 
                 x_k = Math.Pow(expression, (1 / Math.Pow(2, quadratureCounter)));
 
@@ -103,21 +108,32 @@
                     x_k = -x_k;
                 }
 
+                //if (BigDecimalAbs(CheckRoot(x_k)) > BigDecimalAbs(CheckRoot(-x_k)))
+                //{
+                //    x_k = -x_k;
+                //}
+
                 _roots[k] = x_k;
                 //Console.WriteLine(x_k);
             }
         }
 
+        private BigDecimal BigDecimalAbs (BigDecimal x)
+        {
+            if (x < 0) return -x;
+            return x;
+        }
+
         public double CheckRoot(double x)
         {
-            double sum = 0;
+            BigDecimal sum = 0;
 
             for (int k = 0; k < _coefficients.Count; k++)
             {
-                sum += _coefficients[k] * Math.Pow(x, k);
+                sum += (BigDecimal)_coefficients[k] * (BigDecimal)Math.Pow(x, k);
             }
 
-            return sum;
+            return (double)sum;
         }
 
         private void PullIntermediateCoefficients()
