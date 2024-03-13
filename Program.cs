@@ -37,3 +37,5 @@ LinearEquation linearEquation = new LinearEquation(new List<long>()
     150, 249, -661, -905, 885, 917, -290, -256
 });
 linearEquation.PrintPolinom();
+linearEquation.Quadrature();
+linearEquation.PrintIntermediatePolinom();
