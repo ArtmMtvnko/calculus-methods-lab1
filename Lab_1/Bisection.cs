@@ -33,7 +33,7 @@ namespace CalculusMethodsLab1.Lab_1
             while (Math.Abs(a - b) > epsilon)
             {
                 c = (a + b) / 2;
-                Console.WriteLine("Approximate root value: {0}", c);
+                Console.WriteLine("{0}", c);
 
                 f_c = Func(c);
 

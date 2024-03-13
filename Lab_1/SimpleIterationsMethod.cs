@@ -19,7 +19,6 @@
 
         public double Fi(double x)
         {
-            //return Math.Exp((Math.Exp(Math.Sin(x) + Math.Cos(x) + 1)) / 3);
             return x - 0.2058 * -Func(x);
         }
 
@@ -30,11 +29,13 @@
 
             xk = low;
             xkPlus1 = Fi(xk);
+            Console.WriteLine("{0}\n{1}", xk, xkPlus1);
 
             while (Math.Abs(xkPlus1 - xk) > epsilon)
             {
                 xk = xkPlus1;
                 xkPlus1 = Fi(xk);
+                Console.WriteLine(xkPlus1);
             }
 
             return xkPlus1;
@@ -52,11 +53,13 @@
 
             xk = low;
             xkPlus1 = Fi2(xk);
+            Console.WriteLine("{0}\n{1}", xk, xkPlus1);
 
             while (Math.Abs(xkPlus1 - xk) > epsilon)
             {
                 xk = xkPlus1;
                 xkPlus1 = Fi2(xk);
+                Console.WriteLine(xkPlus1);
             }
 
             return xkPlus1;
