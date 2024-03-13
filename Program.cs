@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Numerics;
 using CalculusMethodsLab1.Lab_1;
+using Singulink.Numerics;
+using Singulink.Numerics;
 
 Console.WriteLine("Hello, World!");
 
@@ -33,10 +35,14 @@ Console.WriteLine("Hello, World!");
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot2(5.5, 6.5, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot3(7.5, 9, 0.0000001));
 
+Console.WriteLine(BigInteger.Parse("849918209384891082521") - BigInteger.Parse("849918209384891082521"));
+Console.WriteLine(BigDecimal.Parse("23495092830485093,283485020834"));
+
 LinearEquation linearEquation = new LinearEquation(new List<long>()
 {
     150, 249, -661, -905, 885, 917, -290, -256
 });
+//{ -256, -290, 917, 885, -905, -661, 249, -150 }
 linearEquation.PrintPolinom();
 
 linearEquation.Quadrature();
