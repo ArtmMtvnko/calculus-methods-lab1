@@ -25,31 +25,37 @@
 
         public void PrintPolinom()
         {
+            Console.WriteLine("\n=============== Original polynom ===============\n");
             for (int i = _coefficients.Count - 1; i >= 0; i--)
             {
                 Console.Write($"{_coefficients[i]}x^{i} ");
                 if (i > 0) Console.Write("+ ");
             }
             Console.WriteLine("= 0");
+            Console.WriteLine("\n=============== Original polynom END ===============\n");
         }
 
         public void PrintIntermediatePolinom()
         {
+            Console.WriteLine("\n=============== Intermediate polynom ===============\n");
             for (int i = _modifiedCoefficients.Count - 1; i >= 0; i--)
             {
                 Console.Write($"{_modifiedCoefficients[i]}x^{i} ");
                 if (i > 0) Console.Write("+ ");
             }
             Console.WriteLine("= 0");
+            Console.WriteLine("\n=============== Intermediate polynom END ===============\n");
         }
 
         public void PrintRoots()
         {
+            Console.WriteLine("\n=============== Roots ===============\n");
             // First root (cell in array) = 0, because x^0 = 1
             foreach (double root in _roots)
             {
                 Console.WriteLine(root);
             }
+            Console.WriteLine("\n=============== Roots END ===============\n");
         }
 
         public void Quadrature()
@@ -57,6 +63,7 @@
             long b_k = 0;
             long a_k = 0;
             long sum = 0;
+            PullIntermediateCoefficients();
 
             for (int k = 0; k < _coefficients.Count; k++)
             {
@@ -76,7 +83,6 @@
                 Console.WriteLine(b_k);
                 _modifiedCoefficients[k] = b_k;
             }
-            PullIntermediateCoefficients();
             quadratureCounter++;
         }
 
@@ -98,7 +104,7 @@
                 }
 
                 _roots[k] = x_k;
-                Console.WriteLine(x_k);
+                //Console.WriteLine(x_k);
             }
         }
 
