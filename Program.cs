@@ -39,3 +39,5 @@ LinearEquation linearEquation = new LinearEquation(new List<long>()
 linearEquation.PrintPolinom();
 linearEquation.Quadrature();
 linearEquation.PrintIntermediatePolinom();
+linearEquation.FindRoots();
+linearEquation.PrintRoots();
