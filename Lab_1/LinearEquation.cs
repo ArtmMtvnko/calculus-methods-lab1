@@ -3,9 +3,13 @@
     class LinearEquation
     {
         List<long> _coefficients;
+        List<long> _intermediateCoefficients = new List<long>();
         List<long> _modifiedCoefficients = new List<long>();
+
         double[] _roots;
+
         int quadratureCounter = 0;
+
         public LinearEquation(List<long> coefficients)
         {
             _coefficients = coefficients;
@@ -14,9 +18,8 @@
             _roots = new double[_coefficients.Count];
 
             long[] nums = new long[_coefficients.Count];
-
             _coefficients.CopyTo(nums);
-
+            _intermediateCoefficients = nums.ToList();
             _modifiedCoefficients = nums.ToList();
         }
 
@@ -42,7 +45,7 @@
 
         public void PrintRoots()
         {
-            // First root (cell in array) = 0, because x^0 === 1
+            // First root (cell in array) = 0, because x^0 = 1
             foreach (double root in _roots)
             {
                 Console.WriteLine(root);
@@ -53,24 +56,27 @@
         {
             long b_k = 0;
             long a_k = 0;
-
             long sum = 0;
 
             for (int k = 0; k < _coefficients.Count; k++)
             {
-                a_k = _coefficients[k];
+                a_k = _intermediateCoefficients[k];
                 sum = 0;
 
                 for (int j = 1; j <= _coefficients.Count - k; j++)
                 {
                     if (k - j < 0 || k + j > _coefficients.Count - 1) break;
-                    sum += _coefficients[k-j] * _coefficients[k+j] * (int)Math.Pow((-1), j);
+                    sum += 
+                        _intermediateCoefficients[k-j] *
+                        _intermediateCoefficients[k+j] * 
+                        (int)Math.Pow((-1), j);
                 }
 
                 b_k = a_k * a_k + 2 * sum;
                 Console.WriteLine(b_k);
                 _modifiedCoefficients[k] = b_k;
             }
+            PullIntermediateCoefficients();
             quadratureCounter++;
         }
 
@@ -80,7 +86,9 @@
 
             for (int k = 1; k < _modifiedCoefficients.Count; k++)
             {
-                double expression = (double)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] / (double)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1];
+                double expression = 
+                    (double)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] /
+                    (double)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1];
 
                 x_k = Math.Pow(expression, (1 / Math.Pow(2, quadratureCounter)));
 
@@ -104,6 +112,14 @@
             }
 
             return sum;
+        }
+
+        private void PullIntermediateCoefficients()
+        {
+            for (int i = 0; i < _coefficients.Count; i++)
+            {
+                _intermediateCoefficients[i] = _modifiedCoefficients[i];
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.ComponentModel;
 using System.Numerics;
 using CalculusMethodsLab1.Lab_1;
 
@@ -31,13 +32,25 @@ Console.WriteLine("Hello, World!");
 //Console.WriteLine("1) {0}", simpleIterationsMethod.FindFoot1(2, 3, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot2(5.5, 6.5, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot3(7.5, 9, 0.0000001));
+decimal a = 10.33840923804M - 1.33M;
+Console.WriteLine(a);
 
 LinearEquation linearEquation = new LinearEquation(new List<long>()
 {
     150, 249, -661, -905, 885, 917, -290, -256
 });
 linearEquation.PrintPolinom();
+
 linearEquation.Quadrature();
 linearEquation.PrintIntermediatePolinom();
+
+linearEquation.FindRoots();
+linearEquation.PrintRoots();
+
+
+
+linearEquation.Quadrature();
+linearEquation.PrintIntermediatePolinom();
+
 linearEquation.FindRoots();
 linearEquation.PrintRoots();
