@@ -38,18 +38,20 @@ Console.WriteLine(BigInteger.Parse("849918209384891082521") - BigInteger.Parse("
 Console.WriteLine(BigDecimal.Parse("-234950928304850938420938082098090,2342834283485020834"));
 
 
-LinearEquation linearEquation = new LinearEquation(new List<BigInteger>()
+LinearEquation linearEquation = new LinearEquation(new List<double>()
 {
     150, 249, -661, -905, 885, 917, -290, -256
 });
 //{ -256, -290, 917, 885, -905, -661, 249, -150 }
 linearEquation.PrintPolinom();
 
-for (int i = 0; i < 6; i++)
-{
-    linearEquation.Quadrature();
-    linearEquation.PrintIntermediatePolinom();
+//for (int i = 0; i < 6; i++)
+//{
+//    linearEquation.Quadrature();
+//    linearEquation.PrintIntermediatePolinom();
 
-    linearEquation.FindRoots();
-    linearEquation.PrintRoots();
-}
+//    linearEquation.FindRoots();
+//    linearEquation.PrintRoots();
+//}
+
+linearEquation.Solve(0.0000001);

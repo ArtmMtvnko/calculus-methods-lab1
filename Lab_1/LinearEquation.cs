@@ -1,26 +1,34 @@
-﻿using System.Numerics;
+﻿using System.Globalization;
+using System.Numerics;
 using Singulink.Numerics;
 
 namespace CalculusMethodsLab1.Lab_1
 {
     class LinearEquation
     {
-        List<BigInteger> _coefficients;
-        List<BigInteger> _intermediateCoefficients = new List<BigInteger>();
-        List<BigInteger> _modifiedCoefficients = new List<BigInteger>();
+        List<double> _coefficients;
+        List<double> _intermediateCoefficients = new List<double>();
+        List<double> _modifiedCoefficients = new List<double>();
 
         double[] _roots;
 
         int quadratureCounter = 0;
 
-        public LinearEquation(List<BigInteger> coefficients)
+        public LinearEquation(List<double> coefficients)
         {
             _coefficients = coefficients;
             _coefficients.Reverse();
 
+            double max = _coefficients.Max();
+
+            for (int i = 0; i < _coefficients.Count; i++)
+            {
+                _coefficients[i] /= max;
+            }
+
             _roots = new double[_coefficients.Count];
 
-            BigInteger[] nums = new BigInteger[_coefficients.Count];
+            double[] nums = new double[_coefficients.Count];
             _coefficients.CopyTo(nums);
             _intermediateCoefficients = nums.ToList();
             _modifiedCoefficients = nums.ToList();
@@ -63,9 +71,9 @@ namespace CalculusMethodsLab1.Lab_1
 
         public void Quadrature()
         {
-            BigInteger b_k = 0;
-            BigInteger a_k = 0;
-            BigInteger sum = 0;
+            double b_k = 0;
+            double a_k = 0;
+            double sum = 0;
             PullIntermediateCoefficients();
 
             for (int k = 0; k < _coefficients.Count; k++)
@@ -89,6 +97,14 @@ namespace CalculusMethodsLab1.Lab_1
             quadratureCounter++;
         }
 
+        private void PullIntermediateCoefficients()
+        {
+            for (int i = 0; i < _coefficients.Count; i++)
+            {
+                _intermediateCoefficients[i] = _modifiedCoefficients[i];
+            }
+        }
+
         public void FindRoots()
         {
             double x_k = 0;
@@ -96,9 +112,9 @@ namespace CalculusMethodsLab1.Lab_1
             for (int k = 1; k < _modifiedCoefficients.Count; k++)
             {
                 double expression =
-                    (double)(
-                    (BigDecimal)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] /
-                    (BigDecimal)_modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1]
+                    (
+                    _modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] /
+                    _modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1]
                     );
 
                 x_k = Math.Pow(expression, (1 / Math.Pow(2, quadratureCounter)));
@@ -118,30 +134,52 @@ namespace CalculusMethodsLab1.Lab_1
             }
         }
 
-        private BigDecimal BigDecimalAbs (BigDecimal x)
+        private double CheckRoot(double x)
         {
-            if (x < 0) return -x;
-            return x;
-        }
-
-        public double CheckRoot(double x)
-        {
-            BigDecimal sum = 0;
+            double sum = 0;
 
             for (int k = 0; k < _coefficients.Count; k++)
             {
-                sum += (BigDecimal)_coefficients[k] * (BigDecimal)Math.Pow(x, k);
+                sum += _coefficients[k] * Math.Pow(x, k);
             }
 
-            return (double)sum;
+            return sum;
         }
 
-        private void PullIntermediateCoefficients()
+        public void Solve(double epsilon)
         {
-            for (int i = 0; i < _coefficients.Count; i++)
+            while (SecondNorma() > epsilon)
             {
-                _intermediateCoefficients[i] = _modifiedCoefficients[i];
+                Quadrature();
+                FindRoots();
             }
+
+            PrintRoots();
         }
+
+        private double SecondNorma()
+        {
+            double sum = 0;
+
+            for (int k = 0; k < _modifiedCoefficients.Count; k++)
+            {
+                sum += 
+                    (_modifiedCoefficients[k] - _intermediateCoefficients[k] * _intermediateCoefficients[k]) *
+                    (_modifiedCoefficients[k] - _intermediateCoefficients[k] * _intermediateCoefficients[k]);
+            }
+
+            sum = Math.Sqrt(sum);
+
+            Console.WriteLine(sum);
+            Console.WriteLine(sum < 0.0000001);
+
+            return sum;
+        }
+
+        //private BigDecimal BigDecimalAbs (BigDecimal x)
+        //{
+        //    if (x < 0) return -x;
+        //    return x;
+        //}
     }
 }
