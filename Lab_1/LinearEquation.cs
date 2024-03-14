@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Numerics;
 using Singulink.Numerics;
+using static System.Collections.Specialized.BitVector32;
 
 namespace CalculusMethodsLab1.Lab_1
 {
@@ -19,17 +20,19 @@ namespace CalculusMethodsLab1.Lab_1
             _coefficients = coefficients;
             _coefficients.Reverse();
 
-            double max = _coefficients.Max();
-
-            for (int i = 0; i < _coefficients.Count; i++)
-            {
-                _coefficients[i] /= max;
-            }
-
             _roots = new double[_coefficients.Count];
 
             double[] nums = new double[_coefficients.Count];
             _coefficients.CopyTo(nums);
+
+            double max = _coefficients.Max();
+
+            for (int i = 0; i < _coefficients.Count; i++)
+            {
+                nums[i] /= max;
+            }
+
+
             _intermediateCoefficients = nums.ToList();
             _modifiedCoefficients = nums.ToList();
         }
@@ -112,10 +115,8 @@ namespace CalculusMethodsLab1.Lab_1
             for (int k = 1; k < _modifiedCoefficients.Count; k++)
             {
                 double expression =
-                    (
                     _modifiedCoefficients[_modifiedCoefficients.Count - 1 - k] /
-                    _modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1]
-                    );
+                    _modifiedCoefficients[_modifiedCoefficients.Count - 1 - k + 1];
 
                 x_k = Math.Pow(expression, (1 / Math.Pow(2, quadratureCounter)));
 
@@ -154,7 +155,31 @@ namespace CalculusMethodsLab1.Lab_1
                 FindRoots();
             }
 
+            SpecifyRoots(epsilon);
+
+            Console.WriteLine("After specifing:");
             PrintRoots();
+        }
+
+        private void SpecifyRoots(double epsilon)
+        {
+            Bisection bisection = new Bisection();
+
+            for (int i = 1; i < _roots.Length; i++)
+            {
+                _roots[i] = bisection.FindRootCustomFunc(_roots[i] - 0.01, _roots[i] + 0.01, epsilon,
+                    (x) =>
+                    {
+                        return _coefficients[0] +
+                        _coefficients[1] * Math.Pow(x, 1) +
+                        _coefficients[2] * Math.Pow(x, 2) +
+                        _coefficients[3] * Math.Pow(x, 3) +
+                        _coefficients[4] * Math.Pow(x, 4) +
+                        _coefficients[5] * Math.Pow(x, 5) +
+                        _coefficients[6] * Math.Pow(x, 6) +
+                        _coefficients[7] * Math.Pow(x, 7);
+                    });
+            }
         }
 
         private double SecondNorma()
@@ -164,8 +189,8 @@ namespace CalculusMethodsLab1.Lab_1
             for (int k = 0; k < _modifiedCoefficients.Count; k++)
             {
                 sum += 
-                    (_modifiedCoefficients[k] - _intermediateCoefficients[k] * _intermediateCoefficients[k]) *
-                    (_modifiedCoefficients[k] - _intermediateCoefficients[k] * _intermediateCoefficients[k]);
+                    (_modifiedCoefficients[k] - Math.Pow(_intermediateCoefficients[k], 2)) *
+                    (_modifiedCoefficients[k] - Math.Pow(_intermediateCoefficients[k], 2));
             }
 
             sum = Math.Sqrt(sum);

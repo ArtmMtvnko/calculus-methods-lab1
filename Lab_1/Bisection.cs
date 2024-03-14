@@ -60,12 +60,12 @@ namespace CalculusMethodsLab1.Lab_1
             b = high;
 
             if (func(low) * func(high) > 0)
-                throw new Exception("Function is not monotone in this range");
+                throw new Exception("Function does not have any roots or is not monotone in this range");
 
             while (Math.Abs(a - b) > epsilon)
             {
                 c = (a + b) / 2;
-                Console.WriteLine("Approximate root value: {0}", c);
+                //Console.WriteLine("Approximate root value: {0}", c);
 
                 f_c = func(c);
 
