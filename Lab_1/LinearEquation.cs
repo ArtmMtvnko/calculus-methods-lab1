@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Numerics;
-using Singulink.Numerics;
-using static System.Collections.Specialized.BitVector32;
+﻿using Singulink.Numerics;
 
 namespace CalculusMethodsLab1.Lab_1
 {
@@ -125,11 +122,6 @@ namespace CalculusMethodsLab1.Lab_1
                     x_k = -x_k;
                 }
 
-                //if (BigDecimalAbs(CheckRoot(x_k)) > BigDecimalAbs(CheckRoot(-x_k)))
-                //{
-                //    x_k = -x_k;
-                //}
-
                 _roots[k] = x_k;
                 //Console.WriteLine(x_k);
             }
@@ -157,7 +149,7 @@ namespace CalculusMethodsLab1.Lab_1
 
             SpecifyRoots(epsilon);
 
-            Console.WriteLine("After specifing:");
+            Console.WriteLine("\nAfter specifing:");
             PrintRoots();
         }
 
@@ -200,11 +192,5 @@ namespace CalculusMethodsLab1.Lab_1
 
             return sum;
         }
-
-        //private BigDecimal BigDecimalAbs (BigDecimal x)
-        //{
-        //    if (x < 0) return -x;
-        //    return x;
-        //}
     }
 }

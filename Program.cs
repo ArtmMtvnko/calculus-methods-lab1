@@ -1,6 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.ComponentModel;
-using System.Numerics;
 using CalculusMethodsLab1.Lab_1;
 using Singulink.Numerics;
 
@@ -33,9 +31,7 @@ Console.WriteLine("Hello, World!");
 //Console.WriteLine("1) {0}", simpleIterationsMethod.FindFoot1(2, 3, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot2(5.5, 6.5, 0.0000001));
 //Console.WriteLine("2) {0}", simpleIterationsMethod.FindFoot3(7.5, 9, 0.0000001));
-Console.WriteLine(ulong.MaxValue);
-Console.WriteLine(BigInteger.Parse("849918209384891082521") - BigInteger.Parse("849918209384891082521"));
-Console.WriteLine(BigDecimal.Parse("-234950928304850938420938082098090,2342834283485020834"));
+
 
 
 LinearEquation linearEquation = new LinearEquation(new List<double>()
@@ -44,14 +40,5 @@ LinearEquation linearEquation = new LinearEquation(new List<double>()
 });
 //{ -256, -290, 917, 885, -905, -661, 249, -150 }
 linearEquation.PrintPolinom();
-
-//for (int i = 0; i < 6; i++)
-//{
-//    linearEquation.Quadrature();
-//    linearEquation.PrintIntermediatePolinom();
-
-//    linearEquation.FindRoots();
-//    linearEquation.PrintRoots();
-//}
 
 linearEquation.Solve(0.0000001);
